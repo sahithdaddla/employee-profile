@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Profile</title>
+    <!-- <link rel="stylesheet" href="./Profile.css"> -->
+    <style>
+      :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  color: #213547;
+  background-color: #f3e5f5;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(103, 58, 183, 0.15);
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid #e1bee7;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #e1bee7;
+  background: linear-gradient(to right, #f3e5f5, #fff);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.profile-avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #9c27b0;
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.2);
+}
+
+.profile-info h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #4a148c;
+}
+
+.profile-info h2 {
+  margin: 0.5rem 0 0 0;
+  font-size: 1.2rem;
+  color: #6a1b9a;
+  font-weight: 500;
+}
+.profile-details {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.info-section {
+  background: #faf5fb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #9c27b0;
+}
+
+.info-section h3 {
+  margin: 0 0 1rem 0;
+  color: #4a148c;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skills-container,
+.achievements {
+  grid-column: 2; 
+}
+
+#languages-container,
+#education-details,
+#employee-id,
+#employee-phone,
+#employee-location {
+  grid-column: 1;
+}
+
+@media (max-width: 768px) {
+  .profile-details {
+    grid-template-columns: 1fr; 
+  }
+  
+  .skills-container,
+  .achievements {
+    grid-column: 1; 
+  }
+}
+
+
+.info-section p {
+  margin: 0.5rem 0;
+  color: #4a4a4a;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.skill-tag {
+  background: #9c27b0;
+  padding: 0.4rem 1rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  color: white;
+  box-shadow: 0 2px 4px rgba(156, 39, 176, 0.2);
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skill-tag:hover {
+  transform: translateY(-2px);
+}
+
+.delete-skill {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0 4px;
+  font-size: 1.2rem;
+  line-height: 1;
+  border-radius: 50%;
+}
+
+.delete-skill:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.new-skill-input {
+  padding: 0.4rem 1rem;
+  border: 2px dashed #9c27b0;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  background: transparent;
+  color: #4a148c;
+  outline: none;
+}
+
+.new-skill-input:focus {
+  border-style: solid;
+  background: white;
+}
+
+.profile-actions {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.achievements {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.achievement-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-card h4 {
+  margin: 0;
+  color: #4a148c;
+}
+
+.achievement-card p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+button {
+  background-color: #9c27b0;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(156, 39, 176, 0.2);
+}
+
+button:hover {
+  background-color: #6a1b9a;
+  transform: translateY(-2px);
+}
+
+.languages span {
+  display: inline-block;
+  margin-right: 1rem;
+  color: #4a4a4a;
+}
+
+.edit-input {
+  padding: 4px 8px;
+  border: 2px solid #9c27b0;
+  border-radius: 4px;
+  font-size: inherit;
+  color: #4a148c;
+  width: 100%;
+  max-width: 300px;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #6a1b9a;
+  box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.2);
+}
+
+@media (max-width: 600px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .profile-container {
+    padding: 1rem;
+  }
+
+  .info-section {
+    padding: 1rem;
+  }
+
+  .achievements {
+    grid-template-columns: 1fr;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="profile-container">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <img src="https://th.bing.com/th/id/OIP.oF9aszXSViel6ryhxALFTgHaE7?w=246&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Employee Photo" class="profile-image">
+        </div>
+          <div class="profile-info">
+            <h1 id="employee-name">Veera Raghava</h1>
+            <h2 id="employee-title">Junior Associate</h2>
+          </div>
+        </div>
+        
+        <div class="profile-details">
+          <div class="info-section">
+            <h3>Contact Information</h3>
+            <p><strong>Email:</strong> <span id="employee-email">veera.raghava@company.com</span></p>
+            <p><strong>Phone:</strong> <span id="employee-phone">+91 98765 43210</span></p>
+            <p><strong>Location:</strong> <span id="employee-location">Bangalore, Karnataka</span></p>
+          </div>
+          
+          <div class="info-section">
+            <h3>Professional Details</h3>
+            <p><strong>Department:</strong> <span id="employee-department">Engineering</span></p>
+            <p><strong>Join Date:</strong> <span id="employee-join-date">April 15, 2024</span></p>
+            <p><strong>Employee ID:</strong> <span id="employee-id">EMP0472</span></p>
+          </div>
+
+          <div class="info-section">
+            <h3>Education</h3>
+            <div id="education-details">
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Languages</h3>
+            <div class="languages" id="languages-container">
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Skills & Expertise</h3>
+            <div class="skills-container" id="skills-container">
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>Achievements & Recognition</h3>
+            <div class="achievements" id="achievements-container">
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button id="edit-profile">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+    <script>
+const employeeData = {
+  name: "Veera Raghava",
+  title: "Junior Associate",
+  email: "Veera.raghava@company.com",
+  phone: "+91 98765 43210",
+  location: "Kurnool, Andhara Pradesh",
+  department: "Engineering",
+  joinDate: "April 15, 2021",
+  employeeId: "EMP0472",
+  skills: [
+    "Html",
+    "Css",
+    "JavaScript",
+    "Node.js",
+    "Expess.js",
+    "java",
+    "Spring-Boot",
+    "System Design",
+    "Team Leadership"
+  ],
+  education: {
+    degree: "B.Tech in Computer Science",
+    university: "Indian Institute of Technology, Delhi",
+    year: "2022"
+  },
+  languages: [
+    "English",
+    "Hindi",
+    "Telugu"
+  ],
+  achievements: [
+    {
+      title: "Best Innovator",
+      year: "2023"
+    },
+    {
+      title: "Patents Filed",
+      count: "3"
+    },
+  ]
+};
+
+function makeEditable(element, key, subKey = null) {
+  const originalValue = element.textContent;
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = originalValue;
+  input.className = 'edit-input';
+  
+  element.parentNode.replaceChild(input, element);
+  input.focus();
+
+  input.addEventListener('blur', () => {
+    const span = document.createElement('span');
+    span.textContent = input.value;
+    
+    // Update the data
+    if (subKey) {
+      employeeData[key][subKey] = input.value;
+    } else {
+      employeeData[key] = input.value;
+    }
+    
+    input.parentNode.replaceChild(span, input);
+  });
+
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      input.blur();
+    }
+  });
+}
+
+function makeSkillsEditable() {
+  const container = document.getElementById('skills-container');
+  container.innerHTML = '';
+
+  employeeData.skills.forEach((skill, index) => {
+    const skillTag = document.createElement('span');
+    skillTag.className = 'skill-tag';
+    skillTag.innerHTML = `${skill} <button class="delete-skill" data-index="${index}">×</button>`;
+    container.appendChild(skillTag);
+  });
+  const newSkillInput = document.createElement('input');
+  newSkillInput.type = 'text';
+  newSkillInput.placeholder = 'Add new skill';
+  newSkillInput.className = 'new-skill-input';
+  container.appendChild(newSkillInput);
+  newSkillInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && newSkillInput.value.trim()) {
+      employeeData.skills.push(newSkillInput.value.trim());
+      makeSkillsEditable(); 
+    }
+  });
+  document.querySelectorAll('.delete-skill').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const index = parseInt(e.target.dataset.index);
+      employeeData.skills.splice(index, 1);
+      makeSkillsEditable(); 
+    });
+  });
+}
+function initializeProfile() {
+  document.getElementById('employee-name').textContent = employeeData.name;
+  document.getElementById('employee-title').textContent = employeeData.title;
+  document.getElementById('employee-email').textContent = employeeData.email;
+  document.getElementById('employee-phone').textContent = employeeData.phone;
+  document.getElementById('employee-location').textContent = employeeData.location;
+  document.getElementById('employee-department').textContent = employeeData.department;
+  document.getElementById('employee-join-date').textContent = employeeData.joinDate;
+  document.getElementById('employee-id').textContent = employeeData.employeeId;
+  const skillsContainer = document.getElementById('skills-container');
+  skillsContainer.innerHTML = '';
+  employeeData.skills.forEach(skill => {
+    const skillTag = document.createElement('span');
+    skillTag.className = 'skill-tag';
+    skillTag.textContent = skill;
+    skillsContainer.appendChild(skillTag);
+  });
+  const educationContainer = document.getElementById('education-details');
+  educationContainer.innerHTML = `
+    <p><strong>Degree:</strong> <span id="education-degree">${employeeData.education.degree}</span></p>
+    <p><strong>University:</strong> <span id="education-university">${employeeData.education.university}</span></p>
+    <p><strong>Graduation Year:</strong> <span id="education-year">${employeeData.education.year}</span></p>
+  `;
+  const languagesContainer = document.getElementById('languages-container');
+  languagesContainer.innerHTML = '';
+  employeeData.languages.forEach(language => {
+    const langSpan = document.createElement('span');
+    langSpan.textContent = language;
+    languagesContainer.appendChild(langSpan);
+  });
+  const achievementsContainer = document.getElementById('achievements-container');
+  achievementsContainer.innerHTML = '';
+  employeeData.achievements.forEach(achievement => {
+    const achievementCard = document.createElement('div');
+    achievementCard.className = 'achievement-card';
+    achievementCard.innerHTML = `
+      <h4>${achievement.title}</h4>
+      <p>${achievement.count || achievement.year}</p>
+    `;
+    achievementsContainer.appendChild(achievementCard);
+  });
+
+  let isEditing = false;
+  const editButton = document.getElementById('edit-profile');
+  editButton.addEventListener('click', () => {
+    isEditing = !isEditing;
+    editButton.textContent = isEditing ? 'Save Profile' : 'Edit Profile';
+
+    if (isEditing) {
+      const editableFields = {
+        'employee-name': 'name',
+        'employee-title': 'title',
+        'employee-email': 'email',
+        'employee-phone': 'phone',
+        'employee-location': 'location',
+        'employee-department': 'department',
+        'employee-join-date': 'joinDate',
+        'education-degree': ['education', 'degree'],
+        'education-university': ['education', 'university'],
+        'education-year': ['education', 'year']
+      };
+
+      for (const [id, key] of Object.entries(editableFields)) {
+        const element = document.getElementById(id);
+        if (Array.isArray(key)) {
+          makeEditable(element, key[0], key[1]);
+        } else {
+          makeEditable(element, key);
+        }
+      }
+      makeSkillsEditable();
+    } else {
+      initializeProfile();
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initializeProfile);
+    </script>
+  </body>
+</html>
